@@ -3,7 +3,7 @@
 ## Logical components
 PWA frontend (responsive UI, routing, components, client validation); PWA platform layer (manifest, service worker, caching); authentication; application API/backend; database; object storage; map layer; optional plant-identification/disease service; administration interface. (Architecture draft §1.)
 
-## Proposed stack (defaults, NOT confirmed)
+## Confirmed stack (owner-approved 2026-10-24)
 - Frontend: React 18 + Vite + TypeScript; React Router; Tailwind CSS + shadcn/ui; vite-plugin-pwa.
 - Backend/data: Supabase (PostgreSQL + PostGIS, Auth, Storage, RLS) for MVP speed; revisit for cost/vendor concerns.
 - Map: Leaflet + OpenStreetMap tiles (verify tile usage policy) or MapLibre + vector tiles.

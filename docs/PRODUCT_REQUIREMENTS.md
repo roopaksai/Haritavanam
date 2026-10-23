@@ -52,4 +52,4 @@ Candidate measures and risk/mitigation table in PRD §12–§13. Key risks: dise
 Every major feature has acceptance criteria in PRD §8.* (referenced). Milestone quality gates in master prompt §12 / `docs/IMPLEMENTATION_PLAN.md`.
 
 ## 12. MVP vs later
-MVP (proposed): auth, app shell/PWA, add/view/edit tree, map pins, plant details, QR generation + public view, basic settings/about/feedback. Later: fields/polygons, monitoring, care logs, tickets, admin, disease, weather, notifications. Confirm with project team.
+MVP / capstone demonstration features (confirmed by owner): user database, add plant, generate QR, gather all plant information about the plant, photo-based disease detection. Remaining features (fields/polygons, monitoring, care logs, tickets, admin, weather, notifications) planned accordingly. Confirmed stack: React 18 + Vite + TS, Tailwind + shadcn/ui, Supabase, Leaflet + OSM, Vercel.

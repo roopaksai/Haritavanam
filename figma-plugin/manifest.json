@@ -1,0 +1,7 @@
+{
+  "name": "Haritavanam Design Generator",
+  "id": "haritavanam-design-generator",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"]
+}

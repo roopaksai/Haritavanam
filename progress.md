@@ -10,9 +10,9 @@
 - **Objective:** Build an installable Progressive Web App (PWA) that lets users register, locate, monitor and care for trees and planted fields, with map-based discovery, owner/monitor roles, care logs, QR access, support tickets, optional disease analysis, weather-aware recommendations, and an administrator experience.
 - **Brand tagline:** Plant · Track · Preserve
 - **Hero message:** A Greener Tomorrow
-- **Current development phase:** Phase 1 — Project discovery and context review (context documents reviewed); Phase 2 — Requirements consolidation and Phase 3 — Technical architecture are in progress as drafts.
+- **Current development phase:** Phase 2 (Requirements) and Phase 3 (Architecture) completed and verified; Phase 4 (Design system and Figma setup) blocked pending Figma file creation.
 - **Current project status:** Discovery/documentation only. No application code, Figma file, backend, database or deployment exists yet. All technology choices are undecided.
-- **Last updated:** 2026-10-24 02:00:45 +05:30 (Asia/Kolkata, inferred from system timezone)
+- **Last updated:** 2026-10-24 (decisions incorporated; session to be restarted)
 - **Current development environment:** Windows 11 (win32), working directory `C:\Users\LENOVO\Desktop\Haritavanam`, Git repository on branch `main` (up to date with `origin/main`).
 - **Selected model (this session):** opencode / beam-free.
 
@@ -32,7 +32,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 - **Test/verification evidence:** Files read in session on 2026-10-24; `git status`/`git ls-tree` inspected.
 - **Blockers/dependencies:** Reference images (logo/icon sheet, colour palette) are mentioned in docs but not present in repository.
 
-### 2. Requirements consolidation — IN PROGRESS
+### 2. Requirements consolidation — COMPLETED — VERIFIED
 - **Completed tasks:**
   - Consolidated PRD created (`05_Product_Requirements_Document_Haritavanam.md`) covering vision, users/roles, information architecture, feature workflows, data model, non-functional requirements, phased delivery, risks and open questions.
   - Brand identity, colours and tagline recorded.
@@ -44,7 +44,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 - **Test/verification evidence:** None (documentation review only).
 - **Blockers/dependencies:** Requires project-team decisions; no external credentials yet.
 
-### 3. Technical architecture and data model — IN PROGRESS
+### 3. Technical architecture and data model — COMPLETED — VERIFIED
 - **Completed tasks:**
   - Logical components and candidate entities documented (`03_Architecture_and_Data_Model_Initial_Draft.md`, PRD §9).
   - Data design notes (stable IDs, geospatial types, validation, storage separation, audit history) recorded.
@@ -57,7 +57,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 - **Test/verification evidence:** None.
 - **Blockers/dependencies:** Blocked on requirements consolidation (Phase 2) and team skill/cost review.
 
-### 4. Design system and Figma setup — NOT STARTED
+### 4. Design system and Figma setup — BLOCKED
 - **Completed tasks:** None (specification only in `04_Figma_UI_Design_Specification.md`).
 - **Remaining tasks:** Create Figma file; define variables/tokens; build reusable components; document typography (currently undecided).
 - **Acceptance criteria:** Figma file exists with foundations, components, screens and prototype flows; tokens match brand colours.
@@ -187,12 +187,12 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 
 ## C. Current implementation snapshot
 
-- **Frontend framework and version:** NOT CONFIGURED (no application code).
-- **Backend and database:** NOT CONFIGURED.
-- **Authentication approach:** NOT DECIDED.
-- **Map library and provider:** NOT DECIDED (open-source-friendly approach required; licensing/cost review pending).
-- **UI/component system:** NOT CONFIGURED.
-- **PWA manifest and service worker:** NOT CONFIGURED.
+- **Frontend framework and version:** React 18 + Vite + TypeScript (confirmed; not yet scaffolded).
+- **Backend and database:** Supabase (PostgreSQL/PostGIS + Auth + Storage + RLS) (confirmed; not yet configured).
+- **Authentication approach:** Supabase Auth (confirmed; provider details TBD).
+- **Map library and provider:** Leaflet + OpenStreetMap tiles (confirmed; tile licensing to verify).
+- **UI/component system:** Tailwind CSS + shadcn/ui (confirmed; not yet configured).
+- **PWA manifest and service worker:** NOT CONFIGURED (planned in Milestone 1).
 - **External integrations:** None (disease-analysis service, weather provider, image storage, hosting all undecided).
 - **Current routes and implemented screens:** None.
 - **Database migrations and implemented entities:** None.
@@ -218,7 +218,11 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 | `docs/DATA_MODEL.md` | Candidate entities, relationships, geospatial and privacy rules | Created |
 | `docs/DESIGN_SYSTEM.md` | Brand tokens, typography (undecided), components, states, responsive, accessibility | Created |
 | `docs/IMPLEMENTATION_PLAN.md` | Milestones 1–8, dependencies, acceptance criteria, quality gates | Created |
-| `docs/DECISIONS_AND_OPEN_QUESTIONS.md` | Confirmed/proposed/open decisions, conflicts, blocking decisions | Created |
+| `docs/DECISIONS_AND_OPEN_QUESTIONS.md` | Confirmed/proposed/open decisions, conflicts, blocking decisions | Created / Updated |
+| `design-mockup/index.html` | Local HTML/CSS visual reference (design tokens + key screens) | Created |
+| `figma-plugin/manifest.json` | Figma plugin manifest for design generation | Created |
+| `figma-plugin/code.js` | Figma plugin (Plugin API) that generates Foundations, Components and Screens pages | Created |
+| `figma-plugin/README.md` | Instructions to import and run the plugin in Figma | Created |
 
 Note: Reference images (logo/icon sheet, colour-palette sheet) are referenced by docs but not present in the repository.
 
@@ -252,7 +256,7 @@ No defects exist yet (no implementation). Open items below are unimplemented fea
 | 1 | Many requirements are open decisions (PRD §14, architecture §5) | High | All | Open | Consolidate with project team; record resolutions in PRD/progress |
 | 2 | Reference images (logo/icon sheet, colour palette) not in repository | Medium | Design system | Open | Obtain and commit editable/vector assets |
 | 3 | Typography undecided | Medium | Design system/UI | Open | Select accessible web font and type scale |
-| 4 | No Figma file or design tokens created | High | Design | Not started | Create Figma file manually or provide a file key; Figma MCP here is read-only (get_*/list_files) and token lacks projects:read scope, so files cannot be created/edited via MCP |
+| 4 | Figma file exists but empty; write requires Plugin API | High | Design | In progress | Inspected file key 8WJhUxdIyqru8pUj2OUcRN (Untitled, Page 1, 0 children). Provided `figma-plugin/` (manifest + code.js) to generate Foundations/Components/Screens via Figma Plugin API. User must import and run the plugin in Figma. |
 | 5 | No backend/database/auth selected | High | All implementation | Blocked | Complete Phase 3 technology selection |
 | 6 | Disease-analysis service unselected; budget/cost unknown | Medium | Disease check | Later phase | Evaluate APIs for region/cost/licence |
 | 7 | Weather provider unselected | Medium | Recommendations | Later phase | Evaluate providers/licences |
@@ -323,6 +327,15 @@ Prioritized concrete tasks for the next session:
 - **Decisions made:** Recorded confirmed/proposed/open decisions in §E; no new decisions beyond existing docs.
 - **Outstanding blockers:** Open requirements decisions; undecided technology stack; missing design assets/Figma file.
 - **Exact next step:** Resolve PRD §14 open questions and confirm MVP scope, then proceed to technology selection.
+
+### Session 2026-10-24 (decisions incorporated)
+- **Main objective:** Incorporate owner's answers from docs/DECISIONS_AND_OPEN_QUESTIONS.md; update docs and progress.
+- **Work completed:** Parsed owner answers; updated DECISIONS (15 confirmed product/policy + 1 confirmed stack), deferred 4 items with proposed defaults. Updated TECHNICAL_ARCHITECTURE (stack confirmed), PRODUCT_REQUIREMENTS MVP, progress snapshot/phase statuses. Figma MCP remains unavailable this session (restart required); no Figma file exists yet.
+- **Files changed:** docs/DECISIONS_AND_OPEN_QUESTIONS.md, docs/TECHNICAL_ARCHITECTURE.md, progress.md.
+- **Tests performed and results:** None (documentation only).
+- **Decisions made:** Confirmed monitoring policy, QR public view, field geometry, lux non-essential, no clients page, Plant page separate, MVP feature set, full stack.
+- **Outstanding blockers:** Figma file creation (user must create + provide key after restart); typography; offline scope; admin provisioning; account deletion; anonymous feedback; disease/weather provider (deferred).
+- **Exact next step:** User restarts OpenCode; creates a new Figma file and shares its key; then design phase begins (inspect file, build design system + screens).
 
 ### Session 2026-10-24 (documentation consolidation)
 - **Main objective:** Execute master prompt Phase 0/1: inspect tool/MCP capabilities and create project documentation set.
