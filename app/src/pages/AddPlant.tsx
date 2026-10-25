@@ -99,7 +99,7 @@ export default function AddPlant() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5">
+    <div className="mx-auto max-w-3xl space-y-5 pb-safe pb-[70px]">
       <div className="flex items-center gap-3">
         <button
           type="button"
@@ -219,7 +219,7 @@ export default function AddPlant() {
               Tap the map to drop the pin. Accuracy within a few metres is plenty.
             </p>
 
-            <div className="overflow-hidden rounded-2xl border border-forest-700/12 pb-safe sm:pb-0">
+            <div className="overflow-hidden rounded-2xl border border-forest-700/12 sm:pb-0">
               <MapView
                 plants={[]}
                 fields={[]}

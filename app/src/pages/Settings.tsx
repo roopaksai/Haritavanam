@@ -105,7 +105,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5">
+    <div className="mx-auto max-w-3xl space-y-5 pb-safe pb-[70px]">
       <div>
         <h1 className="text-[26px] font-semibold leading-tight text-ink-900 sm:text-[30px]">Settings</h1>
         <p className="mt-1 text-[12.5px] text-ink-500">Your profile, this device, and the demo data.</p>

@@ -96,7 +96,7 @@ export default function Dashboard() {
   const firstName = user?.name?.split(' ')[0] ?? 'there'
 
   return (
-    <div className="space-y-5 pb-safe">
+    <div className="space-y-5 pb-safe pb-[70px]">
       {/* Install prompt banner */}
       <InstallPrompt autoShow />
 
@@ -202,182 +202,176 @@ export default function Dashboard() {
         </Link>
       ) : null}
 
-      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
-        <div className="space-y-5">
-          {/* today's care */}
-          <Card className="p-3 sm:p-4">
-            <SectionTitle
-              title="Today’s care"
-              hint="Watering due in the next 24 hours"
-              action={
-                dueToday.length > 0 ? (
-                  <Badge className="border-forest-700/15 bg-sage-100 text-forest-800">
-                    {dueToday.length} to do
-                  </Badge>
-                ) : null
-              }
-            />
+      {/* today's care */}
+      <Card className="overflow-hidden">
+        <SectionTitle
+          title="Today’s care"
+          hint="Watering due in the next 24 hours"
+          action={
+            dueToday.length > 0 ? (
+              <Badge className="border-forest-700/15 bg-sage-100 text-forest-800">
+                {dueToday.length} to do
+              </Badge>
+            ) : null
+          }
+        />
 
-            {dueToday.length === 0 ? (
-              <EmptyState
-                icon={<Droplets size={20} />}
-                title="Nothing due today"
-                description="No watering falls due in the next 24 hours — the next round is already scheduled."
-                className="py-5"
-              />
-            ) : (
-              <ul className="divide-y divide-cream-300">
-                {dueToday.map((plant) => {
-                  const due = dueLabel(plant.nextWateringDue)
-                  const status = statusTheme[plant.status]
-                  return (
-                    <li key={plant.id} className="flex items-center gap-2.5 py-2 first:pt-0 last:pb-0">
-                      <Link
-                        to={`/plants/${plant.id}`}
-                        className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-cream-300"
-                      >
-                        <PlantImage
-                          src={plant.photoUrl}
-                          alt={plant.name}
-                          className="h-full w-full"
-                          iconSize={15}
-                        />
-                      </Link>
-                      <div className="min-w-0 flex-1">
-                        <Link
-                          to={`/plants/${plant.id}`}
-                          className="block truncate text-[13px] font-semibold text-ink-900"
-                        >
-                          {plant.name}
-                        </Link>
-                        <p className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-ink-400">
-                          <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
-                          {due.text} · {plant.health}% health
-                        </p>
-                      </div>
-                      <Button
-                        size="sm"
-                        variant={due.tone === 'late' ? 'primary' : 'secondary'}
-                        loading={busyId === plant.id}
-                        onClick={() => void water(plant)}
-                        icon={<Droplets size={13} />}
-                        className="h-8 px-2"
-                      >
-                        Water
-                      </Button>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </Card>
+        {dueToday.length === 0 ? (
+          <EmptyState
+            icon={<Droplets size={20} />}
+            title="Nothing due today"
+            description="No watering falls due in the next 24 hours — the next round is already scheduled."
+            className="py-5"
+          />
+        ) : (
+          <ul className="divide-y divide-cream-300">
+            {dueToday.map((plant) => {
+              const due = dueLabel(plant.nextWateringDue)
+              const status = statusTheme[plant.status]
+              return (
+                <li key={plant.id} className="flex items-center gap-2.5 py-2 first:pt-0 last:pb-0">
+                  <Link
+                    to={`/plants/${plant.id}`}
+                    className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-cream-300"
+                  >
+                    <PlantImage
+                      src={plant.photoUrl}
+                      alt={plant.name}
+                      className="h-full w-full"
+                      iconSize={15}
+                    />
+                  </Link>
+                  <div className="min-w-0 flex-1">
+                    <Link
+                      to={`/plants/${plant.id}`}
+                      className="block truncate text-[13px] font-semibold text-ink-900"
+                    >
+                      {plant.name}
+                    </Link>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-ink-400">
+                      <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+                      {due.text} · {plant.health}% health
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant={due.tone === 'late' ? 'primary' : 'secondary'}
+                    loading={busyId === plant.id}
+                    onClick={() => void water(plant)}
+                    icon={<Droplets size={13} />}
+                    className="h-8 px-2"
+                  >
+                    Water
+                  </Button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </Card>
 
-          {/* your plants */}
-          <div>
-            <SectionTitle
-              title="Your plants"
-              hint={`${plants.length} record${plants.length === 1 ? '' : 's'}`}
+      {/* your plants */}
+      <div>
+        <SectionTitle
+          title="Your plants"
+          hint={`${plants.length} record${plants.length === 1 ? '' : 's'}`}
+          action={
+            <Link
+              to="/plants"
+              className="inline-flex items-center gap-1 text-[12px] font-semibold text-forest-700"
+            >
+              View all <ArrowRight size={13} aria-hidden />
+            </Link>
+          }
+        />
+        {plants.length === 0 ? (
+          <Card className="p-4">
+            <EmptyState
+              icon={<Sprout size={20} />}
+              title="Plant your first record"
+              description="A photo, a location and a name is all it takes."
               action={
-                <Link
-                  to="/plants"
-                  className="inline-flex items-center gap-1 text-[12px] font-semibold text-forest-700"
-                >
-                  View all <ArrowRight size={13} aria-hidden />
+                <Link to="/add">
+                  <Button size="sm" icon={<Plus size={14} />}>
+                    Register a plant
+                  </Button>
                 </Link>
               }
             />
-            {plants.length === 0 ? (
-              <Card className="p-4">
-                <EmptyState
-                  icon={<Sprout size={20} />}
-                  title="Plant your first record"
-                  description="A photo, a location and a name is all it takes."
-                  action={
-                    <Link to="/add">
-                      <Button size="sm" icon={<Plus size={14} />}>
-                        Register a plant
-                      </Button>
-                    </Link>
-                  }
-                />
-              </Card>
-            ) : (
-              <div className="no-scrollbar -mx-3 flex gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:px-0">
-                {plants.slice(0, 8).map((plant) => (
-                  <PlantCard key={plant.id} plant={plant} />
-                ))}
-              </div>
-            )}
+          </Card>
+        ) : (
+          <div className="no-scrollbar -mx-3 flex gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:px-0">
+            {plants.slice(0, 8).map((plant) => (
+              <PlantCard key={plant.id} plant={plant} />
+            ))}
           </div>
-        </div>
-
-        <div className="space-y-5">
-          {/* map preview */}
-          <Card className="overflow-hidden">
-            <div className="flex items-center justify-between px-3 pt-3">
-              <h2 className="text-[15px] font-semibold text-ink-900">On the ground</h2>
-              <Link to="/map" className="text-[11px] font-semibold text-forest-700">
-                Full map
-              </Link>
-            </div>
-            <div className="mt-2.5 h-[140px] w-full overflow-hidden pb-safe sm:pb-0">
-              <MapView
-                plants={plants}
-                fields={fields}
-                center={CAMPUS_CENTER}
-                zoom={16}
-                interactive={false}
-                className="h-full w-full"
-              />
-            </div>
-            <div className="flex items-center justify-between px-3 py-2.5">
-              <p className="text-[10.5px] text-ink-400">
-                {fields.length} field{fields.length === 1 ? '' : 's'} mapped
-              </p>
-              <Link
-                to="/map"
-                className="inline-flex items-center gap-0.5 text-[10.5px] font-semibold text-forest-700"
-              >
-                Explore <ArrowRight size={11} aria-hidden />
-              </Link>
-            </div>
-          </Card>
-
-          {/* activity */}
-          <Card className="p-3">
-            <SectionTitle title="Recent care" hint="Latest activity in your grove" />
-            {activity.length === 0 ? (
-              <p className="py-3.5 text-center text-[11.5px] text-ink-400">
-                No care logged yet.
-              </p>
-            ) : (
-              <ul className="space-y-2.5">
-                {activity.map((plant) => (
-                  <li key={plant.id} className="flex items-start gap-2">
-                    <CareIcon type={plant.lastCare!.type} size={13} />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-[12px] leading-tight text-ink-800">
-                        <span className="font-semibold">{careLabel[plant.lastCare!.type]}</span>{' '}
-                        {plant.name}
-                      </p>
-                      <p className="mt-0.5 text-[10px] text-ink-400">
-                        {relativeTime(plant.lastCare!.createdAt)}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Card>
-        </div>
+        )}
       </div>
+
+      {/* map preview - card with bounded height */}
+      <Card className="overflow-hidden">
+        <div className="flex items-center justify-between px-3 pt-3">
+          <h2 className="text-[15px] font-semibold text-ink-900">On the ground</h2>
+          <Link to="/map" className="text-[11px] font-semibold text-forest-700">
+            Full map
+          </Link>
+        </div>
+        <div className="relative h-[150px] w-full overflow-hidden">
+          <MapView
+            plants={plants}
+            fields={fields}
+            center={CAMPUS_CENTER}
+            zoom={16}
+            interactive={false}
+            className="absolute inset-0 h-full w-full"
+          />
+        </div>
+        <div className="flex items-center justify-between px-3 py-2.5">
+          <p className="text-[10.5px] text-ink-400">
+            {fields.length} field{fields.length === 1 ? '' : 's'} mapped
+          </p>
+          <Link
+            to="/map"
+            className="inline-flex items-center gap-0.5 text-[10.5px] font-semibold text-forest-700"
+          >
+            Explore <ArrowRight size={11} aria-hidden />
+          </Link>
+        </div>
+      </Card>
+
+      {/* recent care */}
+      <Card className="overflow-hidden p-3">
+        <SectionTitle title="Recent care" hint="Latest activity in your grove" />
+        {activity.length === 0 ? (
+          <p className="py-3.5 text-center text-[11.5px] text-ink-400">
+            No care logged yet.
+          </p>
+        ) : (
+          <ul className="space-y-2.5">
+            {activity.map((plant) => (
+              <li key={plant.id} className="flex items-start gap-2">
+                <CareIcon type={plant.lastCare!.type} size={13} />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[12px] leading-tight text-ink-800">
+                    <span className="font-semibold">{careLabel[plant.lastCare!.type]}</span>{' '}
+                    {plant.name}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-ink-400">
+                    {relativeTime(plant.lastCare!.createdAt)}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
     </div>
   )
 }
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-5 pb-safe">
+    <div className="space-y-5 pb-safe pb-[70px]">
       <div className="space-y-2">
         <Skeleton className="h-3 w-20" />
         <Skeleton className="h-8 w-40" />
@@ -388,10 +382,10 @@ function DashboardSkeleton() {
           <Skeleton key={key} className="h-[92px] rounded-2xl" />
         ))}
       </div>
-      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
-        <Skeleton className="h-[260px] rounded-3xl" />
-        <Skeleton className="h-[260px] rounded-3xl" />
-      </div>
+      <Skeleton className="h-[260px] rounded-3xl" />
+      <Skeleton className="h-[96px] rounded-3xl" />
+      <Skeleton className="h-[140px] rounded-3xl" />
+      <Skeleton className="h-[200px] rounded-3xl" />
     </div>
   )
 }

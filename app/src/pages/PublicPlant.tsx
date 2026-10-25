@@ -28,7 +28,7 @@ export default function PublicPlant() {
         </header>
 
         {result.loading && !plant ? (
-          <div className="mt-5 space-y-3">
+          <div className="mt-5 space-y-3 pb-safe pb-[70px]">
             <Skeleton className="h-[280px] rounded-3xl" />
             <Skeleton className="h-6 w-2/3" />
             <Skeleton className="h-4 w-1/2" />

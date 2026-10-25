@@ -93,7 +93,7 @@ export function SplashScreen() {
       }`}
       aria-hidden={leaving}
     >
-      <div className="relative h-full w-full max-w-[470px] overflow-hidden">
+      <div className="relative h-full w-full max-w-[90%] sm:max-w-[470px] overflow-hidden">
         <img
           src="/brand/splash.jpg"
           alt=""

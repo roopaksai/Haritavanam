@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import L from 'leaflet'
 import { statusTheme } from '../lib/format'
 import type { Field, Plant } from '../lib/types'
@@ -37,6 +38,7 @@ export function MapView({
   pickedPoint = null,
   fitToData = false,
 }: MapViewProps) {
+  const navigate = useNavigate()
   const containerRef = useRef<HTMLDivElement | null>(null)
   const mapRef = useRef<L.Map | null>(null)
   const plantLayer = useRef<L.LayerGroup | null>(null)
@@ -129,7 +131,9 @@ export function MapView({
         riseOnHover: true,
         zIndexOffset: plant.id === selectedId ? 500 : 0,
       })
-      marker.on('click', () => onSelectRef.current?.(plant.id))
+      marker.on('click', () => {
+        navigate(`/plants/${plant.id}`)
+      })
       marker.addTo(layer)
     }
 
@@ -157,18 +161,6 @@ export function MapView({
       polygon.bindTooltip(field.name, { direction: 'center', className: 'hv-tooltip' })
       polygon.on('click', () => onSelectRef.current?.(field.id))
       polygon.addTo(layer)
-
-      L.marker([field.centerLat, field.centerLng], {
-        icon: L.divIcon({
-          className: 'hv-pin',
-          html: `<span style="--pin-color:#2F4A33;width:22px;height:22px;border-radius:6px;transform:none">${PIN_SVG}</span>`,
-          iconSize: [22, 22],
-          iconAnchor: [11, 11],
-        }),
-        title: field.name,
-      })
-        .on('click', () => onSelectRef.current?.(field.id))
-        .addTo(layer)
     }
   }, [fields, showFields])
 
@@ -186,5 +178,11 @@ export function MapView({
     }).addTo(layer)
   }, [pickedPoint])
 
-  return <div ref={containerRef} className={className} aria-label="Map of plants and fields" />
+  return (
+    <div
+      ref={containerRef}
+      className={`overflow-clip outline-none max-h-full ${className}`}
+      aria-label="Map of plants and fields"
+    />
+  )
 }

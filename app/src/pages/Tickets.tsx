@@ -49,7 +49,7 @@ export default function Tickets() {
   const filtered = filter === 'all' ? tickets : tickets.filter((ticket) => ticket.status === filter)
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 pb-safe pb-[70px]">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-[26px] font-semibold leading-tight text-ink-900 sm:text-[30px]">

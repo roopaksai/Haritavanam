@@ -61,7 +61,7 @@ export default function MapPage() {
   const selectedField = fields.find((field) => field.id === selected) ?? null
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-safe pb-[70px]">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-[26px] font-semibold leading-tight text-ink-900 sm:text-[30px]">
@@ -194,9 +194,9 @@ export default function MapPage() {
         </div>
       ) : (
         /* ------------------------------------------------- map view */
-        <div className="relative overflow-hidden rounded-3xl border border-forest-700/12 shadow-soft pb-safe sm:pb-0">
+        <div className="relative overflow-hidden rounded-3xl border border-forest-700/12 shadow-soft h-[420px]">
           {result.loading && !result.data ? (
-            <Skeleton className="min-h-[420px] w-full rounded-3xl" />
+            <Skeleton className="h-full w-full rounded-3xl" />
           ) : (
             <MapView
               plants={showPlants ? searchedPlants : []}
@@ -205,7 +205,7 @@ export default function MapPage() {
               onSelect={setSelected}
               center={CAMPUS_CENTER}
               zoom={16}
-              className="min-h-[420px] w-full"
+              className="h-full w-full"
             />
           )}
 

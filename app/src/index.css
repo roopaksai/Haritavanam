@@ -120,6 +120,10 @@
     padding-bottom: max(env(safe-area-inset-bottom), 0px);
   }
 
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+
   .safe-top {
     padding-top: max(env(safe-area-inset-top), 0px);
   }
