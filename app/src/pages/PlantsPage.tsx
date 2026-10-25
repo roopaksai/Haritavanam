@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MapPin, Plus, Search, Trees } from 'lucide-react'
 import { api } from '../lib/api'
+import { usePlantScope } from '../lib/auth'
 import { dueLabel, plantAge, statusTheme } from '../lib/format'
 import { useAsync } from '../lib/useAsync'
 import type { Plant, PlantStatus } from '../lib/types'
@@ -30,6 +31,7 @@ const filters: Array<{ value: Filter; label: string }> = [
 ]
 
 export default function PlantsPage() {
+  const scope = usePlantScope()
   const [query, setQuery] = useState('')
   const [debounced, setDebounced] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
@@ -42,11 +44,11 @@ export default function PlantsPage() {
   const result = useAsync(
     () =>
       api.plants({
-        scope: 'mine',
+        scope,
         q: debounced || undefined,
         status: filter === 'all' ? undefined : filter,
       }),
-    [debounced, filter],
+    [debounced, filter, scope],
   )
 
   const plants: Plant[] = result.data?.plants ?? []
