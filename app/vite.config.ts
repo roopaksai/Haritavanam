@@ -25,15 +25,16 @@ export default defineConfig({
         orientation: 'portrait',
         scope: '/',
         start_url: '/',
+        categories: ['lifestyle', 'productivity'],
+        prefer_related_applications: false,
         icons: [
-          { src: 'brand/icon-light.jpeg', sizes: '192x192', type: 'image/jpeg' },
-          { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          { src: 'maskable-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: 'brand/icon-light.jpeg', sizes: '192x192', type: 'image/jpeg', purpose: 'any' },
+          { src: 'brand/icon-light.jpeg', sizes: '512x512', type: 'image/jpeg', purpose: 'any' },
+          { src: 'brand/icon-light.jpeg', sizes: '512x512', type: 'image/jpeg', purpose: 'maskable' },
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,jpg,svg,woff2}'],
+        globPatterns: ['**/*.{js,css,html,png,jpg,jpeg,svg,woff2}'],
         navigateFallbackDenylist: [/^\/api/, /^\/uploads/],
         runtimeCaching: [
           {
