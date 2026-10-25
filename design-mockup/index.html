@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Haritavanam — Design Mockup</title>
+<style>
+  :root {
+    --color-primary: #3A5A40;
+    --color-secondary: #A3B18A;
+    --color-background: #F5F1E8;
+    --color-accent: #EF4444;
+    --color-text: #1F2937;
+    --color-muted: #6B7280;
+    --color-surface: #FFFFFF;
+    --color-border: #D6D3C8;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 999px;
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #2B2B2B; color: var(--color-text); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 24px; }
+  h1 { color: #fff; font-size: 18px; margin: 0 0 16px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; justify-content: center; }
+  .tabs button { background: #444; color: #fff; border: none; padding: 8px 14px; border-radius: var(--radius-full); cursor: pointer; font-size: 13px; }
+  .tabs button.active { background: var(--color-primary); }
+  .phone { width: 360px; height: 720px; background: var(--color-background); border-radius: 28px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.4); position: relative; display: flex; flex-direction: column; }
+  .screen { flex: 1; overflow-y: auto; padding: var(--space-4); display: none; }
+  .screen.active { display: block; }
+  .topbar { background: var(--color-primary); color: #fff; padding: var(--space-4); display: flex; align-items: center; justify-content: space-between; }
+  .topbar .title { font-weight: 600; font-size: 16px; }
+  .bottomnav { background: #fff; border-top: 1px solid var(--color-border); display: flex; justify-content: space-around; padding: 8px 0; }
+  .bottomnav .item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: var(--color-muted); gap: 2px; }
+  .bottomnav .item.active { color: var(--color-primary); font-weight: 600; }
+  .btn { background: var(--color-primary); color: #fff; border: none; padding: 12px 20px; border-radius: var(--radius-md); font-size: 15px; font-weight: 600; width: 100%; cursor: pointer; }
+  .btn.secondary { background: var(--color-secondary); color: var(--color-primary); }
+  .btn.outline { background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); }
+  .btn.danger { background: var(--color-accent); }
+  .card { background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-4); box-shadow: var(--shadow); margin-bottom: var(--space-3); }
+  .input { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: 15px; background: #fff; margin-bottom: var(--space-3); }
+  .label { font-size: 13px; font-weight: 600; margin-bottom: 4px; display: block; }
+  .hero { text-align: center; padding: var(--space-6) var(--space-4); }
+  .hero h2 { color: var(--color-primary); font-size: 26px; margin: 0 0 8px; }
+  .hero p { color: var(--color-muted); margin: 0 0 24px; }
+  .tagline { color: var(--color-secondary); font-weight: 600; letter-spacing: 1px; font-size: 13px; margin-bottom: 8px; }
+  .pin { width: 28px; height: 28px; background: var(--color-accent); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 2px solid #fff; box-shadow: var(--shadow); }
+  .map { background: #C8D6C0; height: 320px; border-radius: var(--radius-lg); position: relative; overflow: hidden; }
+  .map .pin { position: absolute; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; }
+  .badge.healthy { background: #DCEFD8; color: #2E5A31; }
+  .badge.care { background: #FFF3CD; color: #7A5A00; }
+  .qr-frame { width: 220px; height: 220px; border: 3px solid var(--color-primary); border-radius: var(--radius-md); margin: 0 auto; position: relative; background: #fff; display: flex; align-items: center; justify-content: center; color: var(--color-muted); font-size: 13px; }
+  .qr-frame::before, .qr-frame::after { content: ""; position: absolute; width: 24px; height: 24px; border-color: var(--color-accent); border-style: solid; }
+  .qr-frame::before { top: -3px; left: -3px; border-width: 3px 0 0 3px; }
+  .qr-frame::after { bottom: -3px; right: -3px; border-width: 0 3px 3px 0; }
+  .row { display: flex; gap: var(--space-3); }
+  .meta { font-size: 13px; color: var(--color-muted); margin: 2px 0; }
+  .empty { text-align: center; color: var(--color-muted); padding: var(--space-6); }
+  .note { color: #fff; font-size: 12px; margin-top: 12px; text-align: center; max-width: 360px; opacity: 0.8; }
+</style>
+</head>
+<body>
+  <h1>Haritavanam — Design Mockup (local reference)</h1>
+  <div class="tabs">
+    <button class="active" onclick="show('welcome')">Welcome</button>
+    <button onclick="show('signin')">Sign in</button>
+    <button onclick="show('dashboard')">Dashboard</button>
+    <button onclick="show('details')">Plant details</button>
+    <button onclick="show('addtree')">Add tree</button>
+    <button onclick="show('qr')">QR scan</button>
+  </div>
+  <div class="phone">
+    <div class="topbar">
+      <span class="title" id="topTitle">Haritavanam</span>
+      <span>☰</span>
+    </div>
+    <div class="screen active" id="welcome">
+      <div class="hero">
+        <div class="tagline">PLANT · TRACK · PRESERVE</div>
+        <h2>A Greener Tomorrow</h2>
+        <p>Plant trees, track their growth and be a part of a sustainable future.</p>
+        <button class="btn">Get started</button>
+        <div style="height:12px"></div>
+        <button class="btn outline">Sign in</button>
+      </div>
+    </div>
+    <div class="screen" id="signin">
+      <h3 style="color:var(--color-primary);margin:0 0 16px;">Sign in</h3>
+      <label class="label">Email or phone</label>
+      <input class="input" placeholder="you@example.com" />
+      <label class="label">Password</label>
+      <input class="input" type="password" placeholder="••••••••" />
+      <button class="btn">Continue</button>
+      <p class="meta" style="text-align:center;margin-top:12px;">No account? Create one</p>
+    </div>
+    <div class="screen" id="dashboard">
+      <div class="map">
+        <div class="pin" style="top:60px;left:80px;"></div>
+        <div class="pin" style="top:140px;left:200px;background:var(--color-secondary);"></div>
+        <div class="pin" style="top:220px;left:120px;"></div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><strong>Neem — Azadirachta indica</strong><div class="meta">Planted 12 Mar 2026 · 2.3 km away</div></div>
+          <span class="badge healthy">Healthy</span>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div><strong>Mango — Mangifera indica</strong><div class="meta">Planted 04 Jan 2026 · 5.1 km away</div></div>
+          <span class="badge care">Under care</span>
+        </div>
+      </div>
+    </div>
+    <div class="screen" id="details">
+      <div style="height:180px;background:#C8D6C0;border-radius:var(--radius-lg);margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--color-muted);">Photo</div>
+      <h3 style="margin:0 0 4px;color:var(--color-primary);">Neem</h3>
+      <div class="meta">Azadirachta indica · Tree</div>
+      <div class="meta">Planted 12 Mar 2026</div>
+      <div class="card" style="margin-top:12px;">
+        <strong>Owner</strong> <span class="meta">Sai Roopak</span><br/>
+        <strong>Monitor</strong> <span class="meta">— (request to monitor)</span>
+      </div>
+      <div class="card">
+        <strong>Next watering</strong>
+        <div class="meta">Planned: Sat 25 Oct 2026</div>
+        <button class="btn" style="margin-top:8px;">Mark watered</button>
+      </div>
+      <div class="card">
+        <strong>QR code</strong>
+        <div class="meta">Scan to view public details</div>
+        <div style="text-align:center;margin-top:8px;"><div class="qr-frame">QR</div></div>
+      </div>
+    </div>
+    <div class="screen" id="addtree">
+      <h3 style="color:var(--color-primary);margin:0 0 16px;">Add a tree</h3>
+      <label class="label">Photo</label>
+      <div style="height:120px;background:#E8E4D8;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:var(--color-muted);margin-bottom:12px;">Tap to capture / upload</div>
+      <label class="label">Common / species name</label>
+      <input class="input" placeholder="e.g. Neem" />
+      <label class="label">Description (optional)</label>
+      <textarea class="input" rows="3" placeholder="Notes about this tree"></textarea>
+      <label class="label">Location</label>
+      <div style="height:120px;background:#C8D6C0;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:var(--color-muted);margin-bottom:12px;">Map — tap to set pin (manual fallback)</div>
+      <button class="btn">Review &amp; save</button>
+    </div>
+    <div class="screen" id="qr">
+      <h3 style="color:var(--color-primary);margin:0 0 16px;text-align:center;">Scan QR code</h3>
+      <div class="qr-frame" style="width:260px;height:260px;">Align QR within frame</div>
+      <p class="meta" style="text-align:center;margin-top:16px;">Camera permission required. Enter code manually if unavailable.</p>
+      <button class="btn outline" style="margin-top:8px;">Enter code manually</button>
+    </div>
+    <div class="bottomnav">
+      <div class="item active">⌂<br/>Home</div>
+      <div class="item">⌖<br/>Map</div>
+      <div class="item">＋<br/>Add</div>
+      <div class="item">  <br/>QR</div>
+      <div class="item">☰<br/>More</div>
+    </div>
+  </div>
+  <p class="note">Local visual reference only. Brand colours: #3A5A40 / #A3B18A / #F5F1E8 / #EF4444. Typography pending final decision.</p>
+  <script>
+    function show(id){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+      event.target.classList.add('active');
+      const titles = {welcome:'Haritavanam',signin:'Sign in',dashboard:'Dashboard',details:'Plant details',addtree:'Add tree',qr:'QR scan'};
+      document.getElementById('topTitle').textContent = titles[id];
+    }
+  </script>
+</body>
+</html>
