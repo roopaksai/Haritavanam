@@ -1,4 +1,5 @@
 skills/
 node_modules/
 .env
+qa/
 

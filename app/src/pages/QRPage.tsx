@@ -13,6 +13,7 @@ import {
   ShieldCheck,
 } from 'lucide-react'
 import { api } from '../lib/api'
+import { usePlantScope } from '../lib/auth'
 import { useAsync } from '../lib/useAsync'
 import { useToast } from '../lib/toast'
 import type { Plant } from '../lib/types'
@@ -71,7 +72,8 @@ export default function QRPage() {
 /* ---------------------------------------------------------------- labels */
 
 function MyLabels() {
-  const result = useAsync(() => api.plants({ scope: 'mine' }), [])
+  const scope = usePlantScope()
+  const result = useAsync(() => api.plants({ scope }), [scope])
   const plants = result.data?.plants ?? []
 
   if (result.loading && !result.data) {

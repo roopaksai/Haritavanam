@@ -22,6 +22,7 @@ export default function Welcome() {
         className="absolute inset-0 hidden h-full w-full object-cover lg:block"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-cream-100/70 via-cream-100/5 to-forest-950/80 lg:from-forest-950/25 lg:via-forest-950/15 lg:to-forest-950/80" />
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-forest-950/75 via-forest-950/30 to-transparent lg:block" />
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col px-5 pb-8 pt-12 sm:px-8 lg:pb-14">
         <div className="flex items-center justify-between">
@@ -40,7 +41,7 @@ export default function Welcome() {
         </div>
 
         <div className="mt-auto max-w-xl pt-24">
-          <p className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-forest-800/70 lg:text-sage-200">
+          <p className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-forest-800/80 lg:text-sage-200">
             Plant · Track · Preserve
           </p>
           <h1 className="display-tight mt-3 text-[46px] text-forest-950 sm:text-[58px] lg:text-cream-50 lg:text-[68px]">
@@ -48,7 +49,7 @@ export default function Welcome() {
             <br />
             Tomorrow
           </h1>
-          <p className="mt-4 max-w-[42ch] text-[14.5px] leading-relaxed text-ink-700/85 sm:text-[15.5px] lg:text-cream-100/85">
+          <p className="mt-4 max-w-[42ch] text-[14.5px] leading-relaxed text-forest-950/80 sm:text-[15.5px] lg:text-cream-100/90">
             Give every tree a record it can keep for a hundred years — where it stands, who cares for
             it, and what it needs next.
           </p>

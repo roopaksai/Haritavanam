@@ -11,7 +11,7 @@ import {
   TreePine,
 } from 'lucide-react'
 import { api, ApiError } from '../lib/api'
-import { useAuth } from '../lib/auth'
+import { useAuth, usePlantScope } from '../lib/auth'
 import { formatDate, priorityTheme, relativeTime, ticketTheme } from '../lib/format'
 import type { Priority, Ticket, TicketStatus } from '../lib/types'
 import { useAsync } from '../lib/useAsync'
@@ -182,8 +182,9 @@ function CreateTicketSheet({
   onCreated: () => void
 }) {
   const { user } = useAuth()
+  const scope = usePlantScope()
   const toast = useToast()
-  const plants = useAsync(() => (open ? api.plants({ scope: 'mine' }) : Promise.resolve({ plants: [] })), [open])
+  const plants = useAsync(() => (open ? api.plants({ scope }) : Promise.resolve({ plants: [] })), [open, scope])
 
   const [subject, setSubject] = useState('')
   const [description, setDescription] = useState('')

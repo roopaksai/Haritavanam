@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Layers, Leaf, MapPin, Trees, X } from 'lucide-react'
 import { api } from '../lib/api'
+import { usePlantScope } from '../lib/auth'
 import { statusTheme } from '../lib/format'
 import { useAsync } from '../lib/useAsync'
 import type { Field, Plant, PlantStatus } from '../lib/types'
@@ -13,15 +14,16 @@ import { Badge, Button, ErrorState, Skeleton } from '../components/ui'
 type Filter = 'all' | PlantStatus
 
 export default function MapPage() {
+  const scope = usePlantScope()
   const [filter, setFilter] = useState<Filter>('all')
   const [selected, setSelected] = useState<string | null>(null)
   const [showFields, setShowFields] = useState(true)
   const [showPlants, setShowPlants] = useState(true)
 
   const result = useAsync(async () => {
-    const [plants, fields] = await Promise.all([api.plants({ scope: 'mine' }), api.fields()])
+    const [plants, fields] = await Promise.all([api.plants({ scope }), api.fields()])
     return { plants: plants.plants, fields: fields.fields }
-  }, [])
+  }, [scope])
 
   const plants: Plant[] = result.data?.plants ?? []
   const fields: Field[] = result.data?.fields ?? []

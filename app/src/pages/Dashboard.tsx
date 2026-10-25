@@ -15,7 +15,7 @@ import {
   Trees,
 } from 'lucide-react'
 import { api, ApiError } from '../lib/api'
-import { useAuth } from '../lib/auth'
+import { useAuth, usePlantScope } from '../lib/auth'
 import { careLabel, dueLabel, greeting, relativeTime, statusTheme } from '../lib/format'
 import type { Field, Plant, Stats } from '../lib/types'
 import { useAsync } from '../lib/useAsync'
@@ -37,17 +37,18 @@ import {
 
 export default function Dashboard() {
   const { user } = useAuth()
+  const scope = usePlantScope()
   const toast = useToast()
   const [busyId, setBusyId] = useState<string | null>(null)
 
   const overview = useAsync(async () => {
     const [stats, plants, fields] = await Promise.all([
       api.stats(),
-      api.plants({ scope: 'mine' }),
+      api.plants({ scope }),
       api.fields(),
     ])
     return { stats: stats.stats, plants: plants.plants, fields: fields.fields }
-  }, [])
+  }, [scope])
 
   const stats: Stats | null = overview.data?.stats ?? null
   const plants: Plant[] = overview.data?.plants ?? []
@@ -217,7 +218,7 @@ export default function Dashboard() {
               <EmptyState
                 icon={<Droplets size={22} />}
                 title="Nothing due today"
-                description="Every plant has had its turn. The next round is already scheduled."
+                description="No watering falls due in the next 24 hours — the next round is already scheduled."
                 className="py-6"
               />
             ) : (

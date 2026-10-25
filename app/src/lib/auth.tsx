@@ -80,3 +80,12 @@ export function useAuth() {
   if (!context) throw new Error('useAuth must be used inside <AuthProvider>')
   return context
 }
+
+/**
+ * Admins oversee every record; owners and monitors only see the plants they are
+ * responsible for. Pass the result to `api.plants({ scope })`.
+ */
+export function usePlantScope(): 'all' | 'mine' {
+  const { user } = useAuth()
+  return user?.role === 'admin' ? 'all' : 'mine'
+}

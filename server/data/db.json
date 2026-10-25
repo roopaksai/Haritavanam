@@ -71,8 +71,8 @@
       "nextWateringDue": "2026-10-26T01:30:00.000Z",
       "createdAt": "2026-09-25T04:30:00.000Z",
       "updatedAt": "2026-10-25T10:30:00.000Z",
-      "scanCount": 1,
-      "lastScannedAt": "2026-10-25T08:30:10.830Z"
+      "scanCount": 11,
+      "lastScannedAt": "2026-10-25T09:44:30.854Z"
     },
     {
       "id": "plt_2",
@@ -619,6 +619,42 @@
       "userId": "usr_owner",
       "createdAt": "2026-10-25T08:50:42.853Z",
       "expiresAt": "2026-11-01T08:50:42.853Z"
+    },
+    {
+      "id": "7380fde5-6f2c-46e6-93c8-e964b87aa0b1",
+      "token": "3626e91a379875e19a233f84e0d956ab3a3bdd56457bf6a8e2895ef1e453f770",
+      "userId": "usr_admin",
+      "createdAt": "2026-10-25T09:43:25.817Z",
+      "expiresAt": "2026-11-01T09:43:25.817Z"
+    },
+    {
+      "id": "c8000dbd-c002-4ea1-b36e-4ed0f1ef6023",
+      "token": "02784401021364bb49a2c9ef3696c8e1d9a832f7828713077d17180f340accf4",
+      "userId": "usr_admin",
+      "createdAt": "2026-10-25T09:43:57.486Z",
+      "expiresAt": "2026-11-01T09:43:57.486Z"
+    },
+    {
+      "id": "bf98518e-f761-4df1-8f6b-1ad801d4d8e5",
+      "token": "44f802ddfec60d9c1db4b48d0d38b9edb8ca8c0f20a242a8fcb788cedcf6deba",
+      "userId": "usr_admin",
+      "createdAt": "2026-10-25T09:44:34.351Z",
+      "expiresAt": "2026-11-01T09:44:34.351Z"
+    },
+    {
+      "id": "ef04c2a0-1180-4674-ac4d-8e05a097cc98",
+      "token": "aca83b773e5d251030fc906b299a1025f6316711178ce1b69a9ccc5e42324131",
+      "userId": "usr_owner",
+      "createdAt": "2026-10-25T09:45:03.535Z",
+      "expiresAt": "2026-11-01T09:45:03.535Z"
+    },
+    {
+      "id": "f25c3010-9c52-4835-ace9-16d5c539a1c4",
+      "token": "4151f4159c4f03d81e639180a2c2913d49d715399d95b96871b4e0845757d68a",
+      "userId": "usr_monitor",
+      "createdAt": "2026-10-25T09:45:20.020Z",
+      "expiresAt": "2026-11-01T09:45:20.020Z"
     }
-  ]
+  ],
+  "diseaseScans": []
 }
