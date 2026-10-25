@@ -243,6 +243,20 @@
   }
 }
 
+@keyframes hv-load {
+  from {
+    width: 4%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.splash-bar {
+  animation: hv-load 1.45s cubic-bezier(0.3, 0.7, 0.3, 1) forwards;
+}
+
+
 .animate-fade-up {
   animation: hv-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
