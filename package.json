@@ -1,0 +1,17 @@
+{
+  "name": "haritavanam",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Haritavanam — Plant · Track · Preserve",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:app": "npm --prefix app run dev",
+    "dev:server": "npm --prefix server run dev",
+    "build": "npm --prefix app run build",
+    "preview": "npm --prefix app run preview",
+    "start": "npm --prefix server start",
+    "seed": "npm --prefix server run seed",
+    "seed:reset": "npm --prefix server run seed:reset"
+  }
+}

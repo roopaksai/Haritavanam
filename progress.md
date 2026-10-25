@@ -10,9 +10,9 @@
 - **Objective:** Build an installable Progressive Web App (PWA) that lets users register, locate, monitor and care for trees and planted fields, with map-based discovery, owner/monitor roles, care logs, QR access, support tickets, optional disease analysis, weather-aware recommendations, and an administrator experience.
 - **Brand tagline:** Plant · Track · Preserve
 - **Hero message:** A Greener Tomorrow
-- **Current development phase:** Phase 2 (Requirements) and Phase 3 (Architecture) completed and verified; Phase 4 (Design system and Figma setup) blocked pending Figma file creation.
-- **Current project status:** Discovery/documentation only. No application code, Figma file, backend, database or deployment exists yet. All technology choices are undecided.
-- **Last updated:** 2026-10-24 (decisions incorporated; session to be restarted)
+- **Current development phase:** Phase 7 (PWA foundation) in progress; Phases 2–3 completed and verified; Phase 4/5 partially done (Figma file populated via plugin, visual match unverified). Phase 7.5 (UI/UX rebuild + local backend) starting next, on hold for owner assets.
+- **Current project status:** Application scaffold exists in `app/` and builds (`tsc --noEmit` clean, `vite build` emits SW + manifest). UI is placeholder-grade (Unicode glyphs, no real components). Supabase wiring is being **dropped** in favour of a local backend in `server/`. Asset handover pending — see `docs/ASSET_REQUEST.md`.
+- **Last updated:** 2026-10-25 (direction change: no Supabase, local backend + demo accounts, full UI/UX rebuild; asset request issued)
 - **Current development environment:** Windows 11 (win32), working directory `C:\Users\LENOVO\Desktop\Haritavanam`, Git repository on branch `main` (up to date with `origin/main`).
 - **Selected model (this session):** opencode / beam-free.
 
@@ -187,17 +187,18 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 
 ## C. Current implementation snapshot
 
-- **Frontend framework and version:** React 18 + Vite + TypeScript (confirmed; not yet scaffolded).
-- **Backend and database:** Supabase (PostgreSQL/PostGIS + Auth + Storage + RLS) (confirmed; not yet configured).
-- **Authentication approach:** Supabase Auth (confirmed; provider details TBD).
-- **Map library and provider:** Leaflet + OpenStreetMap tiles (confirmed; tile licensing to verify).
-- **UI/component system:** Tailwind CSS + shadcn/ui (confirmed; not yet configured).
-- **PWA manifest and service worker:** NOT CONFIGURED (planned in Milestone 1).
-- **External integrations:** None (disease-analysis service, weather provider, image storage, hosting all undecided).
-- **Current routes and implemented screens:** None.
+- **Frontend framework and version:** React 19 + Vite 8 + TypeScript 6, Tailwind CSS v4 (`@theme` tokens), React Router 7. Scaffolded in `app/`.
+- **Backend and database:** **Superseded decision.** Supabase is no longer used. Target: `server/` folder — Node + Express + SQLite (file DB) + seeded demo data + JWT/session auth. Not yet built.
+- **Authentication approach:** Local credential auth in `server/` with three seeded demo accounts (admin/owner/monitor). Frontend keeps a demo-mode fallback so screens render without the backend running.
+- **Map library and provider:** Leaflet + OpenStreetMap tiles (confirmed; tile licensing still to verify).
+- **UI/component system:** Tailwind CSS + hand-rolled accessible primitives (to be rebuilt from the installed design skills). shadcn/ui no longer required.
+- **PWA manifest and service worker:** CONFIGURED (`vite-plugin-pwa`, autoUpdate, precache 6 entries). Icon files referenced but not yet supplied.
+- **External integrations:** None. Disease analysis will be mocked behind a service interface.
+- **Current routes:** `/welcome`, `/signin`, shell with `/dashboard`, `/plants/:id`, `/add`, `/qr`, `/settings`, `/about`, `/feedback`, 404. `/map`, admin and tickets routes not yet added.
 - **Database migrations and implemented entities:** None.
-- **Available automated tests:** None.
+- **Available automated tests:** None. Vitest + Playwright installed as a plan, not yet configured.
 - **Deployment status:** NOT DEPLOYED.
+- **Installed project skills:** 10 under `.agents/skills/` — accessibility, deploy-to-vercel, design-mobile-apps, frontend-design, playwright-best-practices, supabase, supabase-postgres-best-practices, tailwind-design-system, vercel-react-best-practices, web-design-guidelines.
 
 ---
 
@@ -223,6 +224,11 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `COMPLETED — VERIFIED`, `CO
 | `figma-plugin/manifest.json` | Figma plugin manifest for design generation | Created |
 | `figma-plugin/code.js` | Figma plugin (Plugin API) that generates Foundations, Components and Screens pages | Created |
 | `figma-plugin/README.md` | Instructions to import and run the plugin in Figma | Created |
+| `docs/ASSET_REQUEST.md` | Exact asset/input checklist given to the owner (logo, icons, splash, hero, demo location, credentials) | Created |
+| `app/` | Vite + React + TS + Tailwind v4 + PWA scaffold (config, entry, router, 10 placeholder pages, Supabase client stub) | Created |
+| `app/src/index.css` | Brand tokens via Tailwind v4 `@theme` | Created |
+| `app/vite.config.ts` | PWA manifest + autoUpdate service worker | Created |
+| `.agents/skills/` | 10 project-level agent skills installed (React, design, Supabase, a11y, Playwright, Tailwind, mobile, Vercel) | Created |
 
 Note: Reference images (logo/icon sheet, colour-palette sheet) are referenced by docs but not present in the repository.
 
@@ -244,6 +250,11 @@ Note: Reference images (logo/icon sheet, colour-palette sheet) are referenced by
 | 10 | Typography not finalized | Reference image does not specify font | Open decision | 2026-10-24 | Choose accessible web-available typeface during design |
 | 11 | All technology stack choices (frontend, backend, DB, auth, map, storage, hosting, disease/weather APIs) | Explicitly undecided in architecture draft | NOT DECIDED | 2026-10-24 | Resolve in Phase 3 before implementation |
 | 12 | Navigation structure (whether Explore/Add/Details/QR/Disease are separate pages or flows) | PRD notes ambiguity | Open decision | 2026-10-24 | Finalize after confirming "clients page" meaning |
+| 13 | **Drop Supabase for now.** Backend lives in `server/` (Node + Express + SQLite + JWT), demo-seeded | Owner instruction: "we are not using supabase … maintain a proper backend as a separate folder" | Confirmed | 2026-10-25 | Remove `@supabase/supabase-js` and `src/lib/supabase.ts`; keep schema portable so Postgres can replace SQLite later |
+| 14 | Three seeded demo accounts (admin/owner/monitor) + one-tap role switching on the sign-in screen | Owner instruction: "create some test credentials to log in and render to all the pages" | Confirmed (emails/password awaiting sign-off) | 2026-10-25 | Credentials stored in `server/` seed script; documented in `docs/ASSET_REQUEST.md` §4 |
+| 15 | Rebuild UI/UX from scratch on the existing scaffold rather than patching placeholder pages | Owner: current layouts are "UA functional but not properly graded" | Confirmed | 2026-10-25 | Placeholder glyph icons replaced by a real icon set; every screen gets loading/empty/error states |
+| 16 | Owner will supply logo, app icons, splash artwork and hero photo | Owner offered assets; asked for a list | Confirmed | 2026-10-25 | Checklist issued in `docs/ASSET_REQUEST.md`; polish blocked until assets arrive, structure work is not |
+| 17 | Disease analysis mocked behind a service interface for the demo | No provider selected or budgeted | Proposed | 2026-10-25 | Real provider can be swapped in without touching UI |
 
 ---
 
@@ -254,10 +265,10 @@ No defects exist yet (no implementation). Open items below are unimplemented fea
 | # | Description | Severity/Priority | Affected feature | Status | Next troubleshooting action |
 |---|---|---|---|---|---|
 | 1 | Many requirements are open decisions (PRD §14, architecture §5) | High | All | Open | Consolidate with project team; record resolutions in PRD/progress |
-| 2 | Reference images (logo/icon sheet, colour palette) not in repository | Medium | Design system | Open | Obtain and commit editable/vector assets |
-| 3 | Typography undecided | Medium | Design system/UI | Open | Select accessible web font and type scale |
-| 4 | Figma file exists but empty; write requires Plugin API | High | Design | In progress | Inspected file key 8WJhUxdIyqru8pUj2OUcRN (Untitled, Page 1, 0 children). Provided `figma-plugin/` (manifest + code.js) to generate Foundations/Components/Screens via Figma Plugin API. User must import and run the plugin in Figma. |
-| 5 | No backend/database/auth selected | High | All implementation | Blocked | Complete Phase 3 technology selection |
+| 2 | Brand assets (logo, app icons, splash, hero photo) not supplied; current hero is 343×361 | High | Design system / PWA install | Blocked on owner | Checklist issued in `docs/ASSET_REQUEST.md`; owner to provide files |
+| 3 | Typography undecided | Medium | Design system/UI | Open | Pick a pairing in the rebuild (display serif + humanist sans), self-hosted |
+| 4 | Figma file populated via plugin but never visually compared to `design-mockup/index.html` | Medium | Design | Open | Deferred until the working UI exists; compare screenshots then |
+| 5 | Supabase dropped, local `server/` backend not built yet | High | All implementation | In progress | Build `server/` with auth/plants/fields/care/tickets/QR; seed demo data |
 | 6 | Disease-analysis service unselected; budget/cost unknown | Medium | Disease check | Later phase | Evaluate APIs for region/cost/licence |
 | 7 | Weather provider unselected | Medium | Recommendations | Later phase | Evaluate providers/licences |
 | 8 | Map tile provider licensing/cost unreviewed | Medium | Map discovery | Open | Review terms before selection |
@@ -274,46 +285,38 @@ No defects exist yet (no implementation). Open items below are unimplemented fea
 | 2026-10-24 | `git status` | Pass | Branch main, up to date; `project-context/` untracked |
 | 2026-10-24 | `git ls-tree -r --name-only HEAD` | Pass | Only `README.md` tracked at baseline |
 | 2026-10-24 | Inspect directory tree | Pass | No application code present |
+| 2026-10-25 | `npx tsc --noEmit` in `app/` | Pass | No type errors |
+| 2026-10-25 | `npm run build` in `app/` | Pass | Emitted `dist/sw.js`, `manifest.webmanifest`, `registerSW.js`; 6 precache entries |
+| 2026-10-25 | `npm run dev` in `app/` | Pass (server starts) | Served on `http://localhost:5173`; **no screenshot inspected — visual state UNVERIFIED** |
 
-No automated tests exist. No visual/browser verification performed (no UI implemented).
+No automated tests exist yet. No visual/browser verification has been successfully completed.
 
 ---
 
 ## H. Next actions
 
-Prioritized concrete tasks for the next session:
+Prioritized concrete tasks. **Immediate next action = wait for owner assets/answers, then execute items 1–3.**
 
-1. **Priority: High** — Resolve requirements open questions (PRD §14) with the project team; confirm MVP scope and navigation labels.
-   - Dependencies: None.
-   - Expected outcome: Updated PRD with confirmed requirements; deferred items documented.
-   - Acceptance criteria: Each open question either answered or marked deferred with rationale.
+1. **Priority: High** — Receive owner assets and answers (`docs/ASSET_REQUEST.md`), then place them in `app/public/brand/` and generate all icon/splash derivatives.
+   - Dependencies: Owner handover.
+   - Acceptance criteria: Every must-have asset present or explicitly waived; derivatives generated and referenced by the manifest.
 
-2. **Priority: High** — Complete Phase 3 technology selection (frontend, backend, DB, auth, map provider, storage, hosting) with cost/licensing/skill review.
-   - Dependencies: Task 1 (MVP scope).
-   - Expected outcome: Recorded decisions in §E with rationale.
-   - Acceptance criteria: No "NOT DECIDED" items remain for MVP-critical choices.
+2. **Priority: High** — Build `server/` (Express + SQLite): auth with 3 seeded demo accounts, plants, fields, care logs, monitoring requests (admin-approved, max 1 monitor), tickets, QR tokens, photo upload; plus a one-command `npm run dev` for root that runs API + app.
+   - Dependencies: Credential/location answers.
+   - Acceptance criteria: API starts, seeds idempotently, integration tests pass, frontend loads live data.
 
-3. **Priority: High** — Obtain and commit editable logo/icon assets and colour-palette reference; select and document typography.
-   - Dependencies: None.
-   - Expected outcome: Design assets available in repo.
-   - Acceptance criteria: Assets present; font family and type scale documented.
+3. **Priority: High** — Rebuild UI/UX on the existing scaffold: design tokens + type scale, real icon set, app shell with safe-area handling, and every screen with loading/empty/error/permission-denied states; add `/map`, `/admin`, `/tickets` routes.
+   - Dependencies: Item 1 for final polish (structure work can start before).
+   - Acceptance criteria: Primary journey (sign in → add plant → map pin → QR → care log → ticket) works; screenshots at 360/768/1440; no placeholder glyphs remain.
 
-4. **Priority: Medium** — Create Figma file with foundations, variables/tokens and reusable components.
-   - Dependencies: Tasks 2–3.
-   - Expected outcome: Figma file with brand tokens and base components.
-   - Acceptance criteria: Tokens match brand colours; components have states.
+4. **Priority: Medium** — Configure Vitest + Playwright; write tests for auth, plant CRUD, monitor capacity rule, QR public view.
+   - Acceptance criteria: `npm test` and `npx playwright test` pass, output inspected and recorded in §G.
 
-5. **Priority: Medium** — Scaffold PWA foundation (app shell, manifest, service worker) once stack is selected.
-   - Dependencies: Task 2.
-   - Expected outcome: Running dev app with manifest and registered service worker.
-   - Acceptance criteria: App builds/runs; manifest valid; SW registered.
+5. **Priority: Medium** — Accessibility and responsive audit against WCAG 2.2 AA (focus order, contrast, 44 px targets, reduced motion, keyboard nav), documented with evidence.
 
-6. **Priority: Low** — Evaluate disease-analysis and weather providers for later phases.
-   - Dependencies: Task 1 (MVP scope confirms whether in MVP).
-   - Expected outcome: Provider comparison notes.
-   - Acceptance criteria: At least one feasible option documented per integration.
+6. **Priority: Low** — Replace mocked disease analyser with a real provider once selected; add weather strip.
 
-**Immediate next action:** Resolve requirements open questions (PRD §14) and confirm MVP scope before any design or implementation work.
+**Explicitly parked:** Supabase/Postgres/RLS, cloud deployment, Figma pixel-matching.
 
 ---
 
@@ -345,3 +348,12 @@ Prioritized concrete tasks for the next session:
 - **Decisions made:** Recorded proposed default stack as proposal (not confirmed); recorded Figma MCP limitation.
 - **Outstanding blockers:** Open requirements decisions; undecided stack; missing design assets; no Figma file key.
 - **Exact next step:** Obtain project owner decisions on MVP scope/navigation and technology stack; provide Figma file key or create file manually before design phase.
+
+### Session 2026-10-25 (direction change + asset request)
+- **Main objective:** Act on owner's new direction — drop Supabase, build a real backend in a separate folder, add demo credentials, and rebuild the UI/UX; first deliver the list of assets needed.
+- **Work completed:** Verified scaffold state (`app/` builds; `tsc --noEmit` clean; `vite build` emits SW + manifest; dev server serves on :5173). Confirmed remaining UI is placeholder-grade (Unicode glyph icons in `AppLayout.tsx`, 20-line token file, `@supabase/supabase-js` still a dependency). Confirmed all 10 project skills are installed after repeated server restarts interrupted installs. Wrote `docs/ASSET_REQUEST.md` with exact asset specs (logo mark/lockup, 1024 app-icon master, maskable icon, 1080×1920 splash, 1600×1200 hero, optional icon set + demo photos), the list of derivatives I will generate instead, and six open questions (fonts, demo location, credentials, disease mode, splash behaviour, backend confirmation). Updated progress sections A, C, D, E, F, G, H.
+- **Files changed:** `docs/ASSET_REQUEST.md` (created), `progress.md` (updated).
+- **Tests performed and results:** `npx tsc --noEmit` pass; `npm run build` pass (recorded §G). Visual verification still not completed — browser calls kept being aborted by server restarts.
+- **Decisions made:** #13 drop Supabase → `server/` Express + SQLite; #14 three seeded demo accounts; #15 full UI/UX rebuild; #16 owner-supplied brand assets; #17 mock disease analyser.
+- **Outstanding blockers:** Owner assets and answers (fonts, demo location, credential approval, disease mode, splash behaviour, backend confirmation). No visual verification evidence yet.
+- **Exact next step:** On asset/answer handover, place brand files in `app/public/brand/`, then build `server/` and rebuild the UI/UX per §H items 1–3, recording real evidence in §G.
