@@ -70,6 +70,8 @@ export interface Field {
   notes?: string | null
   ownerName?: string
   monitorName?: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 export interface TicketReply {
@@ -109,6 +111,7 @@ export interface MonitoringRequest {
   ownerName?: string
   suggestedBy?: string | null
   suggestedByName?: string | null
+  decidedBy?: string | null
   status: 'pending' | 'approved' | 'rejected'
   note?: string | null
   adminNote?: string | null
@@ -153,8 +156,16 @@ export interface DemoAccount {
   name: string
   email: string
   role: Role
-  headline?: string
-  avatarColor?: string
+  headline?: string | undefined
+  avatarColor?: string | undefined
+}
+
+export interface Feedback {
+  id: string
+  userId: string
+  rating: number
+  message: string
+  createdAt: string
 }
 
 export interface PublicPlant {
