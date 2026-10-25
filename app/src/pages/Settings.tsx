@@ -15,6 +15,8 @@ import {
 } from 'lucide-react'
 import { api, ApiError } from '../lib/api'
 import { useAuth } from '../lib/auth'
+import { usePWAInstall } from '../lib/usePWAInstall'
+import { InstallPrompt } from '../components/InstallPrompt'
 import type { DemoAccount } from '../lib/types'
 import { useToast } from '../lib/toast'
 import {
@@ -29,17 +31,13 @@ import {
   Skeleton,
 } from '../components/ui'
 
-interface InstallPromptEvent extends Event {
-  prompt: () => Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
-}
-
 const NOTIFY_KEY = 'hv:notifications'
 
 export default function Settings() {
   const { user, signOut, updateUser } = useAuth()
   const toast = useToast()
   const navigate = useNavigate()
+  const { prompt, isInstalled } = usePWAInstall()
 
   const [profileOpen, setProfileOpen] = useState(false)
   const [accounts, setAccounts] = useState<DemoAccount[] | null>(null)
@@ -51,8 +49,6 @@ export default function Settings() {
       return false
     }
   })
-  const [installEvent, setInstallEvent] = useState<InstallPromptEvent | null>(null)
-  const [installed, setInstalled] = useState(false)
 
   useEffect(() => {
     api
@@ -62,21 +58,6 @@ export default function Settings() {
         setDemoPassword(data.password)
       })
       .catch(() => setAccounts([]))
-  }, [])
-
-  useEffect(() => {
-    const onPrompt = (event: Event) => {
-      event.preventDefault()
-      setInstallEvent(event as InstallPromptEvent)
-    }
-    const onInstalled = () => setInstalled(true)
-    window.addEventListener('beforeinstallprompt', onPrompt)
-    window.addEventListener('appinstalled', onInstalled)
-    if (window.matchMedia('(display-mode: standalone)').matches) setInstalled(true)
-    return () => {
-      window.removeEventListener('beforeinstallprompt', onPrompt)
-      window.removeEventListener('appinstalled', onInstalled)
-    }
   }, [])
 
   function toggleNotifications() {
@@ -94,14 +75,7 @@ export default function Settings() {
   }
 
   async function install() {
-    if (!installEvent) {
-      toast.info('Use your browser menu → “Install app” to add Haritavanam to the home screen.')
-      return
-    }
-    await installEvent.prompt()
-    const choice = await installEvent.userChoice
-    if (choice.outcome === 'accepted') setInstalled(true)
-    setInstallEvent(null)
+    await prompt()
   }
 
   return (
@@ -171,14 +145,14 @@ export default function Settings() {
           />
           <Row
             icon={<Download size={17} />}
-            title={installed ? 'Installed' : 'Install on this device'}
+            title={isInstalled ? 'Installed' : 'Install on this device'}
             description={
-              installed
+              isInstalled
                 ? 'Haritavanam is running as an installed app.'
                 : 'Add it to your home screen for a full-screen, offline-ready shell.'
             }
             action={
-              installed ? (
+              isInstalled ? (
                 <Badge className="border-forest-700/15 bg-sage-100 text-forest-800">Ready</Badge>
               ) : (
                 <Button size="sm" variant="secondary" onClick={() => void install()}>
@@ -264,6 +238,7 @@ export default function Settings() {
           setProfileOpen(false)
         }}
       />
+      <InstallPrompt autoShow />
     </div>
   )
 }
