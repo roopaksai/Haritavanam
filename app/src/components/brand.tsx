@@ -12,7 +12,7 @@ export function LogoMark({
 }) {
   return (
     <img
-      src="/brand/icon-light.png"
+      src="/brand/icon-light.jpeg"
       alt=""
       width={size}
       height={size}
