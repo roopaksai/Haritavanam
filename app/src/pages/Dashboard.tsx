@@ -96,7 +96,7 @@ export default function Dashboard() {
   const firstName = user?.name?.split(' ')[0] ?? 'there'
 
   return (
-    <div className="space-y-5 pb-safe pb-[70px]">
+    <div className="px-4 sm:px-5 lg:px-8 space-y-5 pb-safe pb-[70px]">
       {/* Install prompt banner */}
       <InstallPrompt autoShow />
 
@@ -203,7 +203,7 @@ export default function Dashboard() {
       ) : null}
 
       {/* today's care */}
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden p-4 sm:p-5">
         <SectionTitle
           title="Today’s care"
           hint="Watering due in the next 24 hours"
@@ -309,7 +309,7 @@ export default function Dashboard() {
       </div>
 
       {/* map preview - card with bounded height */}
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden p-4 sm:p-5">
         <div className="flex items-center justify-between px-3 pt-3">
           <h2 className="text-[15px] font-semibold text-ink-900">On the ground</h2>
           <Link to="/map" className="text-[11px] font-semibold text-forest-700">
@@ -371,7 +371,7 @@ export default function Dashboard() {
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-5 pb-safe pb-[70px]">
+    <div className="px-4 sm:px-5 lg:px-8 space-y-5 pb-safe pb-[70px]">
       <div className="space-y-2">
         <Skeleton className="h-3 w-20" />
         <Skeleton className="h-8 w-40" />

@@ -39,6 +39,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <SplashScreen />
+      <PWAUpdateNotifier />
       <Routes>
         <Route path="/" element={<RootRedirect />} />
         <Route path="/welcome" element={<Welcome />} />
@@ -50,7 +51,6 @@ export default function App() {
           element={
             <RequireAuth>
               <AppShell />
-              <PWAUpdateNotifier />
             </RequireAuth>
           }
         >

@@ -1,16 +1,15 @@
 /**
  * PWAUpdateNotifier – shows a toast when a new version is available.
  *
- * Works with VitePWA registerType: 'autoUpdate'. When the service worker
- * finds an updated version, it activates it in the background. This hook
- * detects the `controllerchange` event and shows a prompt asking the user
- * to reload the page to get the latest version.
+ * Works with VitePWA registerType: 'autoUpdate'. Detects when the service
+ * worker finds an updated version, installs it in the background, and shows
+ * a prompt asking the user to reload to get the latest version.
  */
 
 import { useCallback, useEffect, useState } from 'react'
 import { RefreshCw } from 'lucide-react'
-import { Button } from './ui'
 import { useToast } from '../lib/toast'
+import { Button } from './ui'
 
 export function PWAUpdateNotifier() {
   const toast = useToast()
@@ -23,21 +22,20 @@ export function PWAUpdateNotifier() {
   useEffect(() => {
     if (!('serviceWorker' in navigator)) return
 
-    let registration: ServiceWorkerRegistration | null = null
+    let swRegistration: ServiceWorkerRegistration | null = null
 
     navigator.serviceWorker.ready.then((reg) => {
-      registration = reg
+      swRegistration = reg
     })
 
     const handleControllerChange = () => {
-      // A new service worker has taken control – the page is running the old version
       setHasUpdate(true)
       toast.info('A new version of Haritavanam is available')
     }
 
     const handleUpdateFound = () => {
-      if (!registration) return
-      const installingWorker = registration.installing
+      if (!swRegistration) return
+      const installingWorker = swRegistration.installing
       if (!installingWorker) return
 
       installingWorker.addEventListener('statechange', () => {
@@ -45,7 +43,6 @@ export function PWAUpdateNotifier() {
           installingWorker.state === 'installed' &&
           navigator.serviceWorker.controller
         ) {
-          // New version is installed and waiting to activate
           setHasUpdate(true)
           toast.info('A new version of Haritavanam is available')
         }
@@ -55,9 +52,17 @@ export function PWAUpdateNotifier() {
     navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange)
     navigator.serviceWorker.addEventListener('updatefound', handleUpdateFound)
 
+    // Periodically check for updates (every 30 seconds)
+    const updateCheckInterval = setInterval(() => {
+      void navigator.serviceWorker.ready.then((reg) => {
+        reg.update()
+      })
+    }, 30000)
+
     return () => {
       navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange)
       navigator.serviceWorker.removeEventListener('updatefound', handleUpdateFound)
+      clearInterval(updateCheckInterval)
     }
   }, [toast])
 
