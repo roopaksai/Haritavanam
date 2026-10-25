@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import AppShell from './components/AppShell'
 import { FullScreenLoader, RequireAdmin, RequireAuth } from './components/RequireAuth'
 import { SplashScreen } from './components/brand'
+import { PWAUpdateNotifier } from './components/PWAUpdateNotifier'
 import { useAuth } from './lib/auth'
 import Welcome from './pages/Welcome'
 import SignIn from './pages/SignIn'
@@ -49,6 +50,7 @@ export default function App() {
           element={
             <RequireAuth>
               <AppShell />
+              <PWAUpdateNotifier />
             </RequireAuth>
           }
         >

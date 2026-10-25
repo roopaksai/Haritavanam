@@ -315,7 +315,7 @@ export default function PlantDetails() {
                   <p className="mt-1 text-[11.5px] text-ink-500">
                     {plant.address ?? 'GITAM University campus'}
                   </p>
-                  <div className="mt-3 h-[180px] overflow-hidden rounded-2xl">
+                  <div className="mt-3 h-[180px] overflow-hidden rounded-2xl pb-safe sm:pb-0">
                     <MapView
                       plants={[plant]}
                       fields={[]}

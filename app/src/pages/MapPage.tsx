@@ -194,7 +194,7 @@ export default function MapPage() {
         </div>
       ) : (
         /* ------------------------------------------------- map view */
-        <div className="relative overflow-hidden rounded-3xl border border-forest-700/12 shadow-soft pb-[10px]">
+        <div className="relative overflow-hidden rounded-3xl border border-forest-700/12 shadow-soft pb-safe sm:pb-0">
           {result.loading && !result.data ? (
             <Skeleton className="min-h-[420px] w-full rounded-3xl" />
           ) : (

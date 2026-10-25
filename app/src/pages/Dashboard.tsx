@@ -320,7 +320,7 @@ export default function Dashboard() {
                 Full map
               </Link>
             </div>
-            <div className="mt-2.5 h-[140px] w-full overflow-hidden">
+            <div className="mt-2.5 h-[140px] w-full overflow-hidden pb-safe sm:pb-0">
               <MapView
                 plants={plants}
                 fields={fields}
