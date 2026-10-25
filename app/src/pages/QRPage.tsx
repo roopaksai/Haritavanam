@@ -44,7 +44,7 @@ export default function QRPage() {
   const [tab, setTab] = useState<Tab>('labels')
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 pb-safe pb-[70px]">
       <div>
         <h1 className="text-[26px] font-semibold leading-tight text-ink-900 sm:text-[30px]">
           Labels & scanning

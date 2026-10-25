@@ -147,7 +147,7 @@ export default function AppShell() {
 
       {/* --------------------------------------------------- mobile tab bar */}
       <nav
-        className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-forest-700/10 bg-cream-50/95 shadow-nav backdrop-blur-lg lg:hidden"
+        className="safe-bottom fixed inset-x-0 bottom-0 z-50 border-t border-forest-700/10 bg-cream-50/95 shadow-nav backdrop-blur-lg lg:hidden"
         aria-label="Main"
       >
         <div className="mx-auto grid max-w-md grid-cols-5 items-center px-2 pb-1.5 pt-2">

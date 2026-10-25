@@ -93,7 +93,7 @@ export default function TicketDetail() {
   const closed = ticket.status === 'resolved'
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4">
+    <div className="mx-auto max-w-3xl space-y-4 pb-safe pb-[70px]">
       <button
         type="button"
         onClick={() => navigate(-1)}

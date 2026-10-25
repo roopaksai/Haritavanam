@@ -56,7 +56,7 @@ export default function Feedback() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-4">
+    <div className="mx-auto max-w-lg space-y-4 pb-safe pb-[70px]">
       <div>
         <h1 className="text-[26px] font-semibold leading-tight text-ink-900 sm:text-[30px]">Feedback</h1>
         <p className="mt-1 text-[12.5px] leading-relaxed text-ink-500">

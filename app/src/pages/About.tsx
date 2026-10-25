@@ -53,7 +53,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl space-y-10 px-5 py-10">
+      <div className="mx-auto max-w-4xl space-y-10 px-5 py-10 pb-safe pb-[70px]">
         <section className="max-w-2xl">
           <p className="text-[15px] leading-relaxed text-ink-700">
             Most planting drives end with a photograph and a promise. Two monsoons later nobody

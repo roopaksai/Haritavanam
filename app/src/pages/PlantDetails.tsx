@@ -133,7 +133,7 @@ export default function PlantDetails() {
   const due = dueLabel(plant.nextWateringDue)
 
   return (
-    <div className="pb-4">
+    <div className="pb-4 pb-safe pb-[70px]">
       {/* hero */}
       <div className="relative -mx-4 -mt-4 overflow-hidden sm:rounded-3xl lg:-mx-8 lg:-mt-6">
         <div className="relative h-[268px] sm:h-[330px]">
@@ -315,7 +315,7 @@ export default function PlantDetails() {
                   <p className="mt-1 text-[11.5px] text-ink-500">
                     {plant.address ?? 'GITAM University campus'}
                   </p>
-                  <div className="mt-3 h-[180px] overflow-hidden rounded-2xl pb-safe sm:pb-0">
+                  <div className="mt-3 h-[180px] overflow-hidden rounded-2xl sm:pb-0">
                     <MapView
                       plants={[plant]}
                       fields={[]}

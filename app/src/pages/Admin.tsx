@@ -58,7 +58,7 @@ export default function Admin() {
 
   if (result.loading && !result.data) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 pb-safe pb-[70px]">
         <Skeleton className="h-[92px] rounded-3xl" />
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[0, 1, 2, 3].map((key) => (
@@ -82,7 +82,7 @@ export default function Admin() {
   const openTickets = tickets.filter((ticket) => ticket.status !== 'resolved')
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-safe pb-[70px]">
       <div>
         <h1 className="text-[26px] font-semibold leading-tight text-ink-900 sm:text-[30px]">
           Administration
