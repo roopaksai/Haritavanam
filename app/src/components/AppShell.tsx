@@ -37,7 +37,7 @@ const mobileNav: NavItem[] = [
   { to: '/dashboard', label: 'Home', icon: Home, end: true },
   { to: '/map', label: 'Map', icon: Map },
   { to: '/add', label: 'Add', icon: Plus },
-  { to: '/qr', label: 'Labels', icon: QrCode },
+  { to: '/plants', label: 'Plants', icon: Trees },
   { to: '/settings', label: 'More', icon: LayoutGrid },
 ]
 

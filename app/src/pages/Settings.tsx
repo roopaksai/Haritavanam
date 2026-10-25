@@ -9,6 +9,7 @@ import {
   LifeBuoy,
   LogOut,
   MessageSquareHeart,
+  QrCode,
   Smartphone,
   UserRound,
 } from 'lucide-react'
@@ -235,6 +236,7 @@ export default function Settings() {
           <LinkRow to="/tickets" icon={<LifeBuoy size={16} />} label="Support tickets" />
           <LinkRow to="/feedback" icon={<MessageSquareHeart size={16} />} label="Send feedback" />
           <LinkRow to="/about" icon={<Info size={16} />} label="About Haritavanam" />
+          <LinkRow to="/qr" icon={<QrCode size={16} />} label="QR labels" />
         </Card>
       </section>
 

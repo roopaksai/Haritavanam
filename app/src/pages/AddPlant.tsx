@@ -219,7 +219,7 @@ export default function AddPlant() {
               Tap the map to drop the pin. Accuracy within a few metres is plenty.
             </p>
 
-            <div className="overflow-hidden rounded-2xl border border-forest-700/12">
+            <div className="overflow-hidden rounded-2xl border border-forest-700/12 pb-safe sm:pb-0">
               <MapView
                 plants={[]}
                 fields={[]}
