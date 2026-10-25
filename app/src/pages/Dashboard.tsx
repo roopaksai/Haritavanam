@@ -24,6 +24,7 @@ import { MapView, CAMPUS_CENTER } from '../components/MapView'
 import { PlantCard } from '../components/PlantCard'
 import { PlantImage } from '../components/PlantImage'
 import { CareIcon } from '../components/CareIcon'
+import { InstallPrompt } from '../components/InstallPrompt'
 import {
   Badge,
   Button,
@@ -95,7 +96,10 @@ export default function Dashboard() {
   const firstName = user?.name?.split(' ')[0] ?? 'there'
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 pb-safe">
+      {/* Install prompt banner */}
+      <InstallPrompt autoShow />
+
       {/* greeting */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -122,16 +126,16 @@ export default function Dashboard() {
       <Card className="relative overflow-hidden border-0">
         <img src="/brand/hero.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-forest-950/85 via-forest-950/55 to-forest-950/10" />
-        <div className="relative flex min-h-[196px] flex-col justify-end p-5 sm:min-h-[224px] sm:p-7">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage-200">
+        <div className="relative flex min-h-[180px] flex-col justify-end p-4 sm:p-6">
+          <p className="text-[9.5px] font-semibold uppercase tracking-[0.2em] text-sage-200">
             {stats?.plants ?? 0} plants · {stats?.fields ?? 0} fields under care
           </p>
-          <h2 className="display-tight mt-2 max-w-sm text-[32px] text-cream-50 sm:text-[38px]">
+          <h2 className="mt-1.5 max-w-sm text-[28px] text-cream-50 sm:text-[36px]">
             A Greener Tomorrow
           </h2>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap gap-2">
             <Link to="/add">
-              <Button size="sm" variant="secondary" icon={<Plus size={15} />} className="border-0">
+              <Button size="sm" variant="secondary" icon={<Plus size={14} />} className="border-0">
                 Register a plant
               </Button>
             </Link>
@@ -139,7 +143,7 @@ export default function Dashboard() {
               <Button
                 size="sm"
                 variant="ghost"
-                icon={<MapPin size={15} />}
+                icon={<MapPin size={14} />}
                 className="text-cream-50 hover:bg-cream-50/15"
               >
                 Open map
@@ -155,26 +159,26 @@ export default function Dashboard() {
           label="Plants"
           value={stats?.plants ?? 0}
           hint={`${stats?.healthy ?? 0} healthy`}
-          icon={<Trees size={15} />}
+          icon={<Trees size={14} />}
         />
         <StatTile
           label="Fields"
           value={stats?.fields ?? 0}
           hint={stats?.pendingRequests ? `${stats.pendingRequests} request pending` : 'All mapped'}
-          icon={<Leaf size={15} />}
+          icon={<Leaf size={14} />}
         />
         <StatTile
           label="Avg health"
           value={`${stats?.avgHealth ?? 0}%`}
           hint={`${stats?.needsAttention ?? 0} need attention`}
-          icon={<HeartPulse size={15} />}
+          icon={<HeartPulse size={14} />}
           tone={stats && stats.avgHealth < 70 ? 'amber' : 'default'}
         />
         <StatTile
           label="Care this week"
           value={stats?.careThisWeek ?? 0}
           hint={`${stats?.dueSoon ?? 0} due soon`}
-          icon={<CalendarClock size={15} />}
+          icon={<CalendarClock size={14} />}
           tone={stats && stats.critical > 0 ? 'clay' : 'default'}
         />
       </div>
@@ -198,10 +202,10 @@ export default function Dashboard() {
         </Link>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-[1.55fr_1fr]">
-        <div className="space-y-6">
+      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+        <div className="space-y-5">
           {/* today's care */}
-          <Card className="p-4 sm:p-5">
+          <Card className="p-3 sm:p-4">
             <SectionTitle
               title="Today’s care"
               hint="Watering due in the next 24 hours"
@@ -216,10 +220,10 @@ export default function Dashboard() {
 
             {dueToday.length === 0 ? (
               <EmptyState
-                icon={<Droplets size={22} />}
+                icon={<Droplets size={20} />}
                 title="Nothing due today"
                 description="No watering falls due in the next 24 hours — the next round is already scheduled."
-                className="py-6"
+                className="py-5"
               />
             ) : (
               <ul className="divide-y divide-cream-300">
@@ -227,26 +231,26 @@ export default function Dashboard() {
                   const due = dueLabel(plant.nextWateringDue)
                   const status = statusTheme[plant.status]
                   return (
-                    <li key={plant.id} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
+                    <li key={plant.id} className="flex items-center gap-2.5 py-2 first:pt-0 last:pb-0">
                       <Link
                         to={`/plants/${plant.id}`}
-                        className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-cream-300"
+                        className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-cream-300"
                       >
                         <PlantImage
                           src={plant.photoUrl}
                           alt={plant.name}
                           className="h-full w-full"
-                          iconSize={16}
+                          iconSize={15}
                         />
                       </Link>
                       <div className="min-w-0 flex-1">
                         <Link
                           to={`/plants/${plant.id}`}
-                          className="block truncate text-[13.5px] font-semibold text-ink-900"
+                          className="block truncate text-[13px] font-semibold text-ink-900"
                         >
                           {plant.name}
                         </Link>
-                        <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-ink-400">
+                        <p className="mt-0.5 flex items-center gap-1.5 text-[10.5px] text-ink-400">
                           <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
                           {due.text} · {plant.health}% health
                         </p>
@@ -256,7 +260,8 @@ export default function Dashboard() {
                         variant={due.tone === 'late' ? 'primary' : 'secondary'}
                         loading={busyId === plant.id}
                         onClick={() => void water(plant)}
-                        icon={<Droplets size={14} />}
+                        icon={<Droplets size={13} />}
+                        className="h-8 px-2"
                       >
                         Water
                       </Button>
@@ -282,14 +287,14 @@ export default function Dashboard() {
               }
             />
             {plants.length === 0 ? (
-              <Card>
+              <Card className="p-4">
                 <EmptyState
-                  icon={<Sprout size={22} />}
+                  icon={<Sprout size={20} />}
                   title="Plant your first record"
                   description="A photo, a location and a name is all it takes."
                   action={
                     <Link to="/add">
-                      <Button size="sm" icon={<Plus size={15} />}>
+                      <Button size="sm" icon={<Plus size={14} />}>
                         Register a plant
                       </Button>
                     </Link>
@@ -297,7 +302,7 @@ export default function Dashboard() {
                 />
               </Card>
             ) : (
-              <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+              <div className="no-scrollbar -mx-3 flex gap-2.5 overflow-x-auto px-3 pb-1 sm:mx-0 sm:px-0">
                 {plants.slice(0, 8).map((plant) => (
                   <PlantCard key={plant.id} plant={plant} />
                 ))}
@@ -306,16 +311,16 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5">
           {/* map preview */}
           <Card className="overflow-hidden">
-            <div className="flex items-center justify-between px-4 pt-4">
-              <h2 className="text-[16px] font-semibold text-ink-900">On the ground</h2>
-              <Link to="/map" className="text-[11.5px] font-semibold text-forest-700">
+            <div className="flex items-center justify-between px-3 pt-3">
+              <h2 className="text-[15px] font-semibold text-ink-900">On the ground</h2>
+              <Link to="/map" className="text-[11px] font-semibold text-forest-700">
                 Full map
               </Link>
             </div>
-            <div className="mt-3 h-[186px] w-full overflow-hidden">
+            <div className="mt-2.5 h-[140px] w-full overflow-hidden">
               <MapView
                 plants={plants}
                 fields={fields}
@@ -325,35 +330,37 @@ export default function Dashboard() {
                 className="h-full w-full"
               />
             </div>
-            <div className="flex items-center justify-between px-4 py-3">
-              <p className="text-[11px] text-ink-400">
+            <div className="flex items-center justify-between px-3 py-2.5">
+              <p className="text-[10.5px] text-ink-400">
                 {fields.length} field{fields.length === 1 ? '' : 's'} mapped
               </p>
               <Link
                 to="/map"
-                className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-forest-700"
+                className="inline-flex items-center gap-0.5 text-[10.5px] font-semibold text-forest-700"
               >
-                Explore <ArrowRight size={12} aria-hidden />
+                Explore <ArrowRight size={11} aria-hidden />
               </Link>
             </div>
           </Card>
 
           {/* activity */}
-          <Card className="p-4">
+          <Card className="p-3">
             <SectionTitle title="Recent care" hint="Latest activity in your grove" />
             {activity.length === 0 ? (
-              <p className="py-4 text-center text-[12px] text-ink-400">No care logged yet.</p>
+              <p className="py-3.5 text-center text-[11.5px] text-ink-400">
+                No care logged yet.
+              </p>
             ) : (
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {activity.map((plant) => (
-                  <li key={plant.id} className="flex items-start gap-2.5">
-                    <CareIcon type={plant.lastCare!.type} size={14} />
+                  <li key={plant.id} className="flex items-start gap-2">
+                    <CareIcon type={plant.lastCare!.type} size={13} />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[12.5px] leading-tight text-ink-800">
+                      <p className="truncate text-[12px] leading-tight text-ink-800">
                         <span className="font-semibold">{careLabel[plant.lastCare!.type]}</span>{' '}
                         {plant.name}
                       </p>
-                      <p className="mt-0.5 text-[10.5px] text-ink-400">
+                      <p className="mt-0.5 text-[10px] text-ink-400">
                         {relativeTime(plant.lastCare!.createdAt)}
                       </p>
                     </div>
@@ -370,20 +377,20 @@ export default function Dashboard() {
 
 function DashboardSkeleton() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 pb-safe">
       <div className="space-y-2">
         <Skeleton className="h-3 w-20" />
         <Skeleton className="h-8 w-40" />
       </div>
-      <Skeleton className="h-[210px] w-full rounded-3xl" />
+      <Skeleton className="h-[200px] w-full rounded-3xl" />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[0, 1, 2, 3].map((key) => (
           <Skeleton key={key} className="h-[92px] rounded-2xl" />
         ))}
       </div>
-      <div className="grid gap-6 lg:grid-cols-[1.55fr_1fr]">
-        <Skeleton className="h-[280px] rounded-3xl" />
-        <Skeleton className="h-[280px] rounded-3xl" />
+      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+        <Skeleton className="h-[260px] rounded-3xl" />
+        <Skeleton className="h-[260px] rounded-3xl" />
       </div>
     </div>
   )

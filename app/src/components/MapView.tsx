@@ -186,5 +186,7 @@ export function MapView({
     }).addTo(layer)
   }, [pickedPoint])
 
-  return <div ref={containerRef} className={className} aria-label="Map of plants and fields" />
+  return (
+    <div ref={containerRef} className={`${className} pb-safe`} aria-label="Map of plants and fields" />
+  )
 }
