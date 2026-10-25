@@ -654,6 +654,13 @@
       "userId": "usr_monitor",
       "createdAt": "2026-10-25T09:45:20.020Z",
       "expiresAt": "2026-11-01T09:45:20.020Z"
+    },
+    {
+      "id": "ef162e0a-59f9-4175-8363-585cbd88b9a8",
+      "token": "9d85bc46117d713f8e405d5831b3521a062dc9b6115de1bff58b39a2f580989c",
+      "userId": "usr_admin",
+      "createdAt": "2026-10-25T10:12:30.188Z",
+      "expiresAt": "2026-11-01T10:12:30.188Z"
     }
   ],
   "diseaseScans": []

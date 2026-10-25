@@ -8,6 +8,12 @@ import App from './App'
 import { AuthProvider } from './lib/auth'
 import { ToastProvider } from './lib/toast'
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+  })
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
